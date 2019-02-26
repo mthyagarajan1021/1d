@@ -154,7 +154,17 @@ and "datas-as-case" is missing... till you write it.
 1. Make defthing work
 
 TODO 1a. Why does mapcar call #'car over the "has"?
+
+         Saying #'car has is the same as saying (function has). Since that statement evaluates to a 
+         function and not a list you technically can't call "car" on it, but the macroexpansion makes 
+         that possible.
+
 TODO 1b. Why is message set to a gensym?
+    
+         Setting message to a gensym means that there is no other symbol that is equal to it. By not 
+         naming the "message" symbol, there will be no collisions between it and another symbol, and 
+         there is no set binding for that symbol.
+
 TODO 1c. Implement "data-as-case": 
 
     (datas-as-case '(name balance interest-rate))
