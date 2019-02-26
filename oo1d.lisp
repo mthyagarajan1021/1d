@@ -247,10 +247,16 @@ TODO 2c. Show the output from the following test
 
 |#
 
+(defun area(rectangle) ;is that how to take in parameter as rectangle?
+    ;Will it automatically know the x1,x2,y1,y2 values from that object?
+    a = x1 * y1 ;because they have to be the same
+  
+  )
+
 (defun polymorphism()
   (let ((sum 0)
         (all (list (circle :radius 1) 
-                   (rectangle :x2 10 :y2 10)
+                   (rectangle :x1 0 :x2 0 :y1 0 :y2 0)
                    (circle :radius 2))))
     (dolist (one all)
       (incf sum (send one 'area)))
