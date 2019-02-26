@@ -162,8 +162,8 @@ TODO 1a. Why does mapcar call #'car over the "has"?
 TODO 1b. Why is message set to a gensym?
     
          Setting message to a gensym means that there is no other symbol that is equal to it. By not 
-         naming the "message" symbol, there will be no collisions between it and another symbol, and 
-         there is no set binding for that symbol.
+         naming the "message" symbol, there will be no collisions between it and another symbol, as that
+         name will not exist elsewhere.
 
 TODO 1c. Implement "data-as-case": 
 
@@ -184,6 +184,14 @@ TODO 1c. Implement "data-as-case":
 Now that that is working, the following should
 expand nicely:
 |#
+
+(methods-as-case '((more (x) (+ x 1)) (less (x) (- x 1)))
+  
+  )
+
+(datas-as-case '(name balance interest-rate)
+  
+  )
 
 ; but first, uncomment this code
 '(defthing
@@ -247,16 +255,10 @@ TODO 2c. Show the output from the following test
 
 |#
 
-(defun area(rectangle) ;is that how to take in parameter as rectangle?
-    ;Will it automatically know the x1,x2,y1,y2 values from that object?
-    a = x1 * y1 ;because they have to be the same
-  
-  )
-
 (defun polymorphism()
   (let ((sum 0)
         (all (list (circle :radius 1) 
-                   (rectangle :x1 0 :x2 0 :y1 0 :y2 0)
+                   (rectangle :x2 10 :y2 10)
                    (circle :radius 2))))
     (dolist (one all)
       (incf sum (send one 'area)))
