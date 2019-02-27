@@ -248,7 +248,9 @@ TODO 2a. Define an object "cirle" with variables x,y
 ; run this to peek inside circle
 '(xpand (circle))
 
-TODO 2b. Define an object "rectangle" with variables x1,x2,y1,y2
+TODO 2b. Define an object "
+
+" with variables x1,x2,y1,y2
     that all default value of 0. Add
     a method "area" that returns the area of that rectangle
 TODO 2c. Show the output from the following test
@@ -273,7 +275,7 @@ TODO 2c. Show the output from the following test
 (defun area(circle) ;can we have two of the same function name? Or do we use same function and just check what shape it is?
   
   (setq squared (* radius radius))
-  (setq a (* 3.14 squared)) ;how to return this value
+  (setq a (* 2 3.14 squared)) ;how to return this value
   
   )
 
