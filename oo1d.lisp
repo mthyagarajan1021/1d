@@ -243,7 +243,7 @@ TODO 1f.. Show the output from the following function
 TODO 2a. Define an object "cirle" with variables x,y
     (for  the center of the circle) and radius 
     (to hold the size of the circle). Add a method 
-    "area" that returns 2 *pi*radius^2
+    "" that returns 2 *pi*radius^2
 
 ; run this to peek inside circle
 '(xpand (circle))
@@ -258,11 +258,25 @@ TODO 2c. Show the output from the following test
 (defun polymorphism()
   (let ((sum 0)
         (all (list (circle :radius 1) 
-                   (rectangle :x2 10 :y2 10)
-                   (circle :radius 2))))
+                   (rectangle :x1 0 :y1 0 :x2 0 :y2 0)
+                   (circle :x 0 :y 0 :radius 2))))
     (dolist (one all)
       (incf sum (send one 'area)))
     (print `(polymorphism ,sum))))
+
+(defun area(rectangle) ;How to pass rectangle as parameter, will it know parameter's fields?
+  
+  (setq a (* x1 x2)) ;don't know if this is correct syntax
+  
+  )
+
+(defun area(circle) ;can we have two of the same function name? Or do we use same function and just check what shape it is?
+  
+  (setq squared (* radius radius))
+  (setq a (* 3.14 squared)) ;how to return this value
+  
+  )
+
 
 ; to run, uncomment the following
 '(polymorphism)
