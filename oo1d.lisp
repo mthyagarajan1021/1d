@@ -213,12 +213,6 @@ TODO 1e. Show the result of expanding you account.
 ; uncomment this to see what an account looks like
 '(xpand (account))
 
-#|
-1f. Fix "withdraw" in "account" such that if you withdraw more than
-what is there, it  returns the symbol 'insufficient-funds
- 
-TODO 1f.. Show the output from the following function
-
 |#
 
 (defun encapsulation ()
@@ -256,6 +250,20 @@ TODO 2b. Define an object "
 TODO 2c. Show the output from the following test
 
 |#
+
+((defthing
+  circle
+  :has  ((x 0) (y 0) (radius 0))
+  :does ((area (radius)
+                   (* pi radius radius))
+         )))
+ 
+ ((defthing
+  rectangle
+  :has  ((x1 0) (y1 0) (x2 0) (y2 0))
+  :does ((area
+                   (* (- x2 x1) (- y2 y1)))
+         )))
 
 (defun polymorphism()
   (let ((sum 0)
