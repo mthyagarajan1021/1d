@@ -186,11 +186,19 @@ expand nicely:
 |#
 
 (methods-as-case '((more (x) (+ x 1)) (less (x) (- x 1)))
-  
+  :does ( 
+         
+         (more (x)
+                  (incf x 1))
+         ;(more (x) (+ x 1))
+         (less (x)
+                     (decf x 1))
+         
+        ; (less (x) (- x 1))
   )
 
 (datas-as-case '(name balance interest-rate)
-  
+  :has  ((name) (balance 0) (interest-rate .05))
   )
 
 ; but first, uncomment this code
