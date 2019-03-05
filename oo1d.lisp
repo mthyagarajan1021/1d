@@ -201,18 +201,11 @@ expand nicely:
     `(,(car lst)
        (lambda ,(cadr lst),@(cddr lst))))
 
-( defun method-as-case (does)
+( defun methods-as-case (does)
     (mapcar #'method-as-list does))
 
 
-(print (method-as-case 
-        '((withdraw (amt)
-                       (decf balance amt))
-             (deposit (amt)
-                      (incf balance amt))
-             (interest ()
-                       (incf balance
-                             (* interest-rate balance))))))
+
 
 (defun data-as-case(name)
   `(,name (lambda () ,name)))
@@ -220,13 +213,11 @@ expand nicely:
 (defun datas-as-case (lst) 
   (mapcar #'data-as-case lst))
 
-(print
- (let ((eg '((name) (balance 0) (interest-rate .05))))
-    (datas-as-case  (mapcar #'car eg))))
 
-(print 1)
+
+
 ; but first, uncomment this code
-'(defthing
+(defthing
   account
   :has  ((name) (balance 0) (interest-rate .05))
   :does ((withdraw (amt)
@@ -243,7 +234,7 @@ TODO 1e. Show the result of expanding you account.
 |#
 
 ; uncomment this to see what an account looks like
-'(xpand (account))
+(xpand (account))
 
 (defun encapsulation ()
    (let ((acc (account :balance 100)))
@@ -258,7 +249,7 @@ TODO 1e. Show the result of expanding you account.
 
 
 ; to run encapuatlion, uncomment the following
-'(encapsulation)
+(encapsulation)
 
 #|
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
