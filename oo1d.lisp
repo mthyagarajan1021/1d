@@ -184,8 +184,8 @@ TODO 1c. Implement "data-as-case":
 Now that that is working, the following should
 expand nicely:
 |#
-
-(methods-as-case '((more (x) (+ x 1)) (less (x) (- x 1)))
+#|
+(defun  methods-as-case '((more (x) (+ x 1)) (less (x) (- x 1)))
   :does ( 
          
          (more (x)
@@ -195,11 +195,30 @@ expand nicely:
                      (decf x 1))
          
         ; (less (x) (- x 1))
-  )
+  ))
+|#
+( defun method-as-list (lst) 
+    `(,(car lst)
+       (lambda ,(cadr lst),@(cddr lst))))
 
-(datas-as-case '(name balance interest-rate)
-  :has  ((name) (balance 0) (interest-rate .05))
-  )
+( defun method-as-case (does)
+    (mapcar #'method-as-list does))
+
+
+(print (method-as-case 
+        '((withdraw (amt)
+                       (decf balance amt))
+             (deposit (amt)
+                      (incf balance amt))
+             (interest ()
+                       (incf balance
+                             (* interest-rate balance))))))
+
+(defun datas-as-case '(mapcar #'car has)
+      `(,(car has)
+       (lambda ,(cadr has),@(cddr has))))
+
+(print (datas-as-case '(((name) (balance 0) (interest-rate .05)))))
 
 ; but first, uncomment this code
 '(defthing
@@ -220,8 +239,6 @@ TODO 1e. Show the result of expanding you account.
 
 ; uncomment this to see what an account looks like
 '(xpand (account))
-
-|#
 
 (defun encapsulation ()
    (let ((acc (account :balance 100)))
