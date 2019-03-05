@@ -214,7 +214,7 @@ expand nicely:
                        (incf balance
                              (* interest-rate balance))))))
 
-(defun datas-as-case '(mapcar #'car has)
+(defun datas-as-case '(mapcar #'car has) 
       `(,(car has)
        (lambda ,(cadr has),@(cddr has))))
 
