@@ -214,12 +214,17 @@ expand nicely:
                        (incf balance
                              (* interest-rate balance))))))
 
-(defun datas-as-case '(mapcar #'car has) 
-      `(,(car has)
-       (lambda ,(cadr has),@(cddr has))))
+(defun data-as-case(name)
+  `(,name (lambda () ,name)))
 
-(print (datas-as-case '(((name) (balance 0) (interest-rate .05)))))
+(defun datas-as-case (lst) 
+  (mapcar #'data-as-case lst))
 
+(print
+ (let ((eg '((name) (balance 0) (interest-rate .05))))
+    (datas-as-case  (mapcar #'car eg))))
+
+(print 1)
 ; but first, uncomment this code
 '(defthing
   account
