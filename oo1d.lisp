@@ -289,7 +289,7 @@ TODO 2c. Show the output from the following test
 (defun polymorphism()
   (let ((sum 0)
         (all (list (circle :radius 1) 
-                   (rectangle :x1 0 :y1 0 :x2 0 :y2 0)
+                   (rectangle :x1 0 :y1 0 :x2 10 :y2 10)
                    (circle :x 0 :y 0 :radius 2))))
     (dolist (one all)
       (incf sum (send one 'area)))
