@@ -154,17 +154,7 @@ and "datas-as-case" is missing... till you write it.
 1. Make defthing work
 
 TODO 1a. Why does mapcar call #'car over the "has"?
-
-         Saying #'car has is the same as saying (function has). Since that statement evaluates to a 
-         function and not a list you technically can't call "car" on it, but the macroexpansion makes 
-         that possible.
-
 TODO 1b. Why is message set to a gensym?
-    
-         Setting message to a gensym means that there is no other symbol that is equal to it. By not 
-         naming the "message" symbol, there will be no collisions between it and another symbol, as that
-         name will not exist elsewhere.
-
 TODO 1c. Implement "data-as-case": 
 
     (datas-as-case '(name balance interest-rate))
@@ -184,40 +174,9 @@ TODO 1c. Implement "data-as-case":
 Now that that is working, the following should
 expand nicely:
 |#
-#|
-(defun  methods-as-case '((more (x) (+ x 1)) (less (x) (- x 1)))
-  :does ( 
-         
-         (more (x)
-                  (incf x 1))
-         ;(more (x) (+ x 1))
-         (less (x)
-                     (decf x 1))
-         
-        ; (less (x) (- x 1))
-  ))
-|#
-( defun method-as-list (lst) 
-    `(,(car lst)
-       (lambda ,(cadr lst),@(cddr lst))))
-
-( defun methods-as-case (does)
-    (mapcar #'method-as-list does))
-
-
-
-
-(defun data-as-case(name)
-  `(,name (lambda () ,name)))
-
-(defun datas-as-case (lst) 
-  (mapcar #'data-as-case lst))
-
-
-
 
 ; but first, uncomment this code
-(defthing
+'(defthing
   account
   :has  ((name) (balance 0) (interest-rate .05))
   :does ((withdraw (amt)
@@ -234,7 +193,13 @@ TODO 1e. Show the result of expanding you account.
 |#
 
 ; uncomment this to see what an account looks like
-(xpand (account))
+'(xpand (account))
+
+#|
+ 
+TODO 1f.. Show the output from the following function
+
+|#
 
 (defun encapsulation ()
    (let ((acc (account :balance 100)))
@@ -249,7 +214,7 @@ TODO 1e. Show the result of expanding you account.
 
 
 ; to run encapuatlion, uncomment the following
-(encapsulation)
+'(encapsulation)
 
 #|
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -258,45 +223,29 @@ TODO 1e. Show the result of expanding you account.
 TODO 2a. Define an object "cirle" with variables x,y
     (for  the center of the circle) and radius 
     (to hold the size of the circle). Add a method 
-    "" that returns 2 *pi*radius^2
+    "area" that returns 2 *pi*radius^2
 
 ; run this to peek inside circle
 '(xpand (circle))
 
-TODO 2b. Define an object "
-
-" with variables x1,x2,y1,y2
+TODO 2b. Define an object "rectangle" with variables x1,x2,y1,y2
     that all default value of 0. Add
     a method "area" that returns the area of that rectangle
 TODO 2c. Show the output from the following test
 
 |#
 
-(defthing
- circle
- :has  ((x 0) (y 0) (radius 0))
- :does ((area (radius)
-                  (* pi radius radius))
-        ))
- 
- (defthing
-  rectangle
-  :has  ((x1 0) (y1 0) (x2 0) (y2 0))
-  :does ((area
-                   (* (- x2 x1) (- y2 y1)))
-         ))
-
 (defun polymorphism()
   (let ((sum 0)
         (all (list (circle :radius 1) 
-                   (rectangle :x1 0 :y1 0 :x2 0 :y2 0)
-                   (circle :x 0 :y 0 :radius 2))))
+                   (rectangle :x2 10 :y2 10)
+                   (circle :radius 2))))
     (dolist (one all)
       (incf sum (send one 'area)))
     (print `(polymorphism ,sum))))
 
 ; to run, uncomment the following
-(polymorphism)
+'(polymorphism)
 
 #|
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -362,6 +311,28 @@ object
 |#
 
 ; implement defklass here
+(defmacro defklass (klass &key has does)
+  (let* ((message (gensym "MESSAGE")))
+    `(defun ,klass (&key ,@has) 
+       (lambda (,message)
+         (case ,message
+           ,@(methods-as-case does)
+           ,@(datas-as-case (mapcar #'car has))))))
+  
+    
+    (let* ((b4          (and isa (gethash isa *meta*)))
+         (has-before  (and b4 (about-has b4)))
+         (does-before (and b4 (about-does b4))))
+    
+     (setf (gethash klass *meta*)
+         (make-about :has has :does does))
+    
+    
+    )
+
+
+
+
 
 (let ((_counter 0))
   (defun counter () (incf _counter)))
