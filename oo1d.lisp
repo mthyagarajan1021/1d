@@ -272,19 +272,19 @@ TODO 2c. Show the output from the following test
 
 |#
 
-((defthing
-  circle
-  :has  ((x 0) (y 0) (radius 0))
-  :does ((area (radius)
-                   (* pi radius radius))
-         )))
+(defthing
+ circle
+ :has  ((x 0) (y 0) (radius 0))
+ :does ((area (radius)
+                  (* pi radius radius))
+        ))
  
- ((defthing
+ (defthing
   rectangle
   :has  ((x1 0) (y1 0) (x2 0) (y2 0))
   :does ((area
                    (* (- x2 x1) (- y2 y1)))
-         )))
+         ))
 
 (defun polymorphism()
   (let ((sum 0)
@@ -295,22 +295,8 @@ TODO 2c. Show the output from the following test
       (incf sum (send one 'area)))
     (print `(polymorphism ,sum))))
 
-(defun area(rectangle) ;How to pass rectangle as parameter, will it know parameter's fields?
-  
-  (setq a (* x1 x2)) ;don't know if this is correct syntax
-  
-  )
-
-(defun area(circle) ;can we have two of the same function name? Or do we use same function and just check what shape it is?
-  
-  (setq squared (* radius radius))
-  (setq a (* 2 3.14 squared)) ;how to return this value
-  
-  )
-
-
 ; to run, uncomment the following
-'(polymorphism)
+(polymorphism)
 
 #|
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
